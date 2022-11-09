@@ -61,14 +61,14 @@ class Voronoi {
     ctx.save();
     for (const seed of this.seeds) {
       ctx.beginPath();
-      ctx.arc(seed.x, seed.y, 2, 0, 2 * Math.PI);
+      ctx.arc(seed.x, seed.y, 3, 0, 2 * Math.PI);
       ctx.fill();
     }
     ctx.restore();
   }
 
   draw() {
-    this.drawCells(0.9);
+    this.drawCells(0.5);
     this.drawSeeds();
   }
 }

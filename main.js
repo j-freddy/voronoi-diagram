@@ -1,17 +1,25 @@
 const canvas = document.getElementById("my-canvas");
 const ctx = canvas.getContext("2d");
 
+const voronoi = new Voronoi(12);
+
 function main() {
   console.log("Hello world!");
-  const voronoi = new Voronoi(12);
-
-  const fps = 12;
-
-  setInterval(() => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    voronoi.moveSeeds();
-    voronoi.draw();
-  }, 1000 / fps);
+  voronoi.draw();
 }
 
 window.addEventListener("load", main);
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === " ") {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    voronoi.drawSeeds();
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === " ") {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    voronoi.draw();
+  }
+});
