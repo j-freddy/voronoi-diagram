@@ -1,6 +1,7 @@
 class Voronoi {
-  constructor(numSeeds) {
+  constructor(numSeeds, blobSize=50) {
     this.seeds = this.generateSeeds(numSeeds);
+    this.blobSize = blobSize;
   }
 
   generateSeeds(numSeeds) {
@@ -16,10 +17,10 @@ class Voronoi {
   }
 
   // Move seeds randomly and slightly
-  moveSeeds() {
+  moveSeeds(speed) {
     for (const seed of this.seeds) {
-      seed.x += random(-1.2, 1.2);
-      seed.y += random(-1.2, 1.2);
+      seed.x += random(-speed, speed);
+      seed.y += random(-speed, speed);
 
       // Do not go out of bounds
       if (seed.x < 0) seed.x = 0;
@@ -27,6 +28,10 @@ class Voronoi {
       if (seed.y < 0) seed.y = 0;
       if (seed.y > canvas.height) seed.y = canvas.height;
     }
+  }
+
+  distToAlpha(dist) {
+    return Math.max(0, 1 - (dist / this.blobSize) ** 2);
   }
 
   drawCells(unit=1) {
@@ -49,7 +54,9 @@ class Voronoi {
           }
         }
 
-        ctx.fillStyle = `#${color}`;
+        // Distance transform overrides colours
+        ctx.globalAlpha = this.distToAlpha(minDist);
+        ctx.fillStyle = "#1864ab";
         ctx.fillRect(x, y, unit, unit);
       }
     }
@@ -67,8 +74,8 @@ class Voronoi {
     ctx.restore();
   }
 
-  draw() {
-    this.drawCells(0.9);
+  draw(unit=1) {
+    this.drawCells(unit);
     this.drawSeeds();
   }
 }

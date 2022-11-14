@@ -3,13 +3,13 @@ const ctx = canvas.getContext("2d");
 
 function main() {
   console.log("Hello world!");
-  const voronoi = new Voronoi(12);
+  const voronoi = new Voronoi(100, 60);
 
   const fps = 12;
 
   setInterval(() => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    voronoi.moveSeeds();
+    voronoi.moveSeeds(2);
     voronoi.draw();
   }, 1000 / fps);
 }
