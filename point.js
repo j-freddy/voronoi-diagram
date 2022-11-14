@@ -1,8 +1,7 @@
 class Point {
-  constructor(x, y, color=null) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.color = color;
   }
 
   dist(other) {

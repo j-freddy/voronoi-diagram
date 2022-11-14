@@ -10,23 +10,15 @@ class Voronoi {
     for (let i = 0; i < numSeeds; i++) {
       const x = random(0, canvas.width);
       const y = random(0, canvas.width);
-      seeds[i] = new Point(x, y, randomColor());
+      seeds[i] = new Seed(x, y, 1.4, 0.4);
     }
 
     return seeds;
   }
 
-  // Move seeds randomly and slightly
-  moveSeeds(speed) {
+  moveSeeds() {
     for (const seed of this.seeds) {
-      seed.x += random(-speed, speed);
-      seed.y += random(-speed, speed);
-
-      // Do not go out of bounds
-      if (seed.x < 0) seed.x = 0;
-      if (seed.x > canvas.width) seed.x = canvas.width;
-      if (seed.y < 0) seed.y = 0;
-      if (seed.y > canvas.height) seed.y = canvas.height;
+      seed.update();
     }
   }
 
@@ -44,13 +36,11 @@ class Voronoi {
         const p = new Point(x, y);
 
         let minDist = Infinity;
-        let color = null;
         // Find nearest neighbour
         for (const seed of this.seeds) {
           const dist = p.dist(seed);
           if (dist < minDist) {
             minDist = dist;
-            color = seed.color;
           }
         }
 
@@ -76,6 +66,6 @@ class Voronoi {
 
   draw(unit=1) {
     this.drawCells(unit);
-    this.drawSeeds();
+    // this.drawSeeds();
   }
 }
